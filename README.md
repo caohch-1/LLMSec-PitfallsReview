@@ -28,5 +28,5 @@ released code, external commentary, or prior reviews.
 ## Credit
 
 The protocol is adapted from the reviewer guidelines in
-[*Chasing Shadows: Pitfalls in LLM Security Research*](https://arxiv.org/abs/2512.09549)
+[*Chasing Shadows: Pitfalls in LLM Security Research*](https://www.ndss-symposium.org/ndss-paper/chasing-shadows-pitfalls-in-llm-security-research/)
 (Evertz et al., NDSS 2026). Licensed under MIT.
