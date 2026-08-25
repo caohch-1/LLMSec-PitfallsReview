@@ -1,6 +1,6 @@
 ---
 name: pitfalls-review
-description: Review one research paper for nine LLM-security methodological pitfalls (data poisoning, label inaccuracy, data leakage, model collapse, spurious correlations, context truncation, prompt sensitivity, surrogate fallacy, model ambiguity) and emit a structured JSON verdict. Use when asked to audit, review, or screen a paper for methodological pitfalls or reproducibility problems.
+description: Review one research paper for nine LLM-security methodological pitfalls (data poisoning, label inaccuracy, data leakage, model collapse, spurious correlations, context truncation, prompt sensitivity, surrogate fallacy, model ambiguity) and write an evidence-backed Markdown report. Use when asked to audit, review, or screen a paper for methodological pitfalls or reproducibility problems.
 license: MIT
 ---
 
@@ -10,8 +10,7 @@ Review one research paper using the protocol below. If given a PDF, extract its 
 `pdftotext <file> -`. Do not use `-layout`: on multi-column papers it can interleave unrelated
 columns and invalidate evidence quotes.
 
-Write the JSON verdict to the requested location, or stdout if none was specified. Validate it
-against `assets/review.schema.json` before reporting completion.
+Write the Markdown report to the requested location, or return it directly if none was specified.
 
 Do not consult the paper's repository, released code, external commentary, benchmark ground truth,
 prior reviews, or unrelated files. Reviewing artifacts would answer a different question.
@@ -232,38 +231,48 @@ Grading:
 
 ---
 
-## Output contract
+## Report format
 
-Return **only** a JSON object, no prose before or after, no markdown fence. Shape:
+Return only a Markdown report, with no surrounding commentary or code fence. Use this structure:
 
-```json
-{
-  "paper_id": "<the identifier you were given>",
-  "assessments": [
-    {
-      "pitfall": "P1",
-      "label": "<one of the nine label strings, verbatim>",
-      "discussed": false,
-      "evidence": [
-        {"quote": "<verbatim span copied from the paper>", "location": "<section, table, or page>"}
-      ],
-      "reasoning": "<2-4 sentences tracing the decision tree to this label>",
-      "confidence": "high"
-    }
-  ]
-}
+```markdown
+# Pitfall review: <paper identifier or title>
+
+## Summary
+
+| Pitfall | Finding | Confidence |
+|---|---|---|
+| P1 — Data Poisoning via Internet Scraping | <exact label> | High, Medium, or Low |
+| ... | ... | ... |
+| P9 — Model Ambiguity | <exact label> | High, Medium, or Low |
+
+## P1 — Data Poisoning via Internet Scraping
+
+**Finding:** <exact label>
+
+**Confidence:** High, Medium, or Low
+
+**Evidence**
+
+> <verbatim quotation from the paper>
+
+— <section, table, or page>
+
+**Reasoning**
+
+<2–4 sentences tracing the decision tree to the finding>
 ```
+
+Repeat the detailed section for `P1` through `P9`, in order, using each pitfall's full title.
 
 Rules:
 
-- Exactly nine assessment objects, `P1` through `P9`, in order.
-- `label` must match one of the nine strings **exactly**, including capitalization and parentheses.
-- `discussed` is a boolean. It must be `true` if and only if the label ends in `(but discussed)`.
-  For labels where the tree never asks about discussion — `Does not apply`, `Unclear from text`,
-  `Not present` — set it to `false`.
-- `confidence` is one of `high`, `medium`, `low`.
-- `evidence` must contain **at least one verbatim quote** from the paper for every label except
-  `Does not apply` and `Unclear from text`, where it may be an empty array. Quotes must be copied
-  exactly — never paraphrase, never invent. If you cannot find a supporting quote, that itself is
-  evidence for `Unclear from text`.
-- Never emit a label not in the table. Never add extra top-level keys.
+- Use one of the nine label strings **exactly**, including capitalization and parentheses, for every
+  `Finding`. The summary and detailed section must agree.
+- Include at least one verbatim paper quotation for every finding except `Does not apply` and
+  `Unclear from text`. For either exception, write `No quotation required for this finding.` under
+  `Evidence` when no useful quotation exists.
+- Put every quotation in a Markdown blockquote and identify its section, table, or page immediately
+  below it. Copy quotations exactly; never paraphrase or invent them.
+- Explain each finding in 2–4 sentences by tracing the decision tree. When the label ends in
+  `(but discussed)`, identify how the paper acknowledges, contextualizes, or addresses the issue.

@@ -1,7 +1,7 @@
 # pitfalls-review
 
 An [Agent Skill](https://agentskills.io/home) that reviews one LLM-security research paper
-for nine methodological pitfalls and returns a structured, evidence-backed JSON verdict.
+for nine methodological pitfalls and returns a readable, evidence-backed Markdown report.
 
 ## Install
 
@@ -19,9 +19,8 @@ collapse, spurious correlations, context truncation, prompt sensitivity, surroga
 and model ambiguity.
 
 The review protocol is self-contained in [`pitfalls-review/SKILL.md`](pitfalls-review/SKILL.md).
-It emits exactly one assessment for each pitfall, supported by verbatim evidence from the paper.
-The output contract is the machine-readable
-[`review.schema.json`](pitfalls-review/assets/review.schema.json).
+It produces a summary table followed by one detailed assessment for each pitfall, supported by
+verbatim evidence from the paper.
 
 The review is deliberately text-only: it judges what the paper says, not its repository,
 released code, external commentary, or prior reviews.
