@@ -22,8 +22,15 @@ The review protocol is self-contained in [`pitfalls-review/SKILL.md`](pitfalls-r
 It produces a summary table followed by one detailed assessment for each pitfall, supported by
 verbatim evidence from the paper.
 
-The review is deliberately text-only: it judges what the paper says, not its repository,
+The review is deliberately paper-only: it judges what the paper says, not its repository,
 released code, external commentary, or prior reviews.
+
+## Reading the PDF
+
+Given a PDF, the skill reads it with whatever tooling you have, and does not stop at the running
+text — prompt templates, model versions, and dataset pipelines are routinely printed as tables and
+figures and nowhere else. Quotations still come only from the running text, whose word order is the
+paper's own; anything read off a table or figure is cited by number instead.
 
 ## Credit
 

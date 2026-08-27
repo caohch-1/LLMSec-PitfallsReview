@@ -6,9 +6,13 @@ license: MIT
 
 # Pitfalls Review
 
-Review one research paper using the protocol below. If given a PDF, extract its text first with
-`pdftotext <file> -`. Do not use `-layout`: on multi-column papers it can interleave unrelated
-columns and invalidate evidence quotes.
+Review one research paper using the protocol below.
+
+If you were given a PDF, read it with whatever PDF tooling the machine has. Do not stop at the
+running text: tables and figures routinely carry prompt templates, model versions, dataset
+provenance, and per-model results that appear nowhere else, and a plain text dump loses or
+scrambles them. Re-render a page to recover a table, and rasterise a page and look at it if you
+can read images.
 
 Write the Markdown report to the requested location, or return it directly if none was specified.
 
@@ -21,8 +25,10 @@ You are reviewing a single research paper to determine whether it exhibits any o
 methodological pitfalls that arise when large language models are used in security research.
 
 Judge **only what the paper says**. You are not evaluating the paper's released code, repository, or
-supplementary artifacts — only the text (including its own appendices, tables, and figure captions).
+supplementary artifacts — only the paper itself, including its appendices, tables, and figures.
 This is deliberate: a claim that is only true in an unpublished script is not a claim the paper made.
+A prompt template or model version printed only in a figure, however, *is* a claim the paper made,
+so read the figures rather than only their captions where you are able to.
 
 You may use general knowledge about models, datasets, and tools named in the paper (for example, a
 model's known maximum context length, or a dataset's public release date). You may not use knowledge
@@ -256,7 +262,7 @@ Return only a Markdown report, with no surrounding commentary or code fence. Use
 
 > <verbatim quotation from the paper>
 
-— <section, table, or page>
+— <section, table, figure, or page>
 
 **Reasoning**
 
@@ -272,7 +278,10 @@ Rules:
 - Include at least one verbatim paper quotation for every finding except `Does not apply` and
   `Unclear from text`. For either exception, write `No quotation required for this finding.` under
   `Evidence` when no useful quotation exists.
-- Put every quotation in a Markdown blockquote and identify its section, table, or page immediately
-  below it. Copy quotations exactly; never paraphrase or invent them.
+- Put every quotation in a Markdown blockquote and identify its section, table, figure, or page
+  immediately below it. Copy quotations exactly; never paraphrase or invent them.
+- Quote only from the paper's running text, whose word order is the paper's own. Cite something you
+  read off a table or a figure by its number instead (`— Table 4`, `— Figure 3, page 5`), and quote
+  the caption or the prose that introduces it.
 - Explain each finding in 2–4 sentences by tracing the decision tree. When the label ends in
   `(but discussed)`, identify how the paper acknowledges, contextualizes, or addresses the issue.
