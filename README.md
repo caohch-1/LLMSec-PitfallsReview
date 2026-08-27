@@ -1,4 +1,4 @@
-# pitfalls-review
+# Pitfalls Review
 
 An [Agent Skill](https://agentskills.io/home) that reviews one LLM-security research paper
 for nine methodological pitfalls and returns a readable, evidence-backed Markdown report.
